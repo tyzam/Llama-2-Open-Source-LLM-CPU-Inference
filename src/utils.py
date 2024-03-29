@@ -6,10 +6,10 @@
 import box
 import yaml
 
-from langchain import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
 from src.prompts import qa_template
 from src.llm import build_llm
 
@@ -40,7 +40,7 @@ def build_retrieval_qa(llm, prompt, vectordb):
 def setup_dbqa():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
                                        model_kwargs={'device': 'cpu'})
-    vectordb = FAISS.load_local(cfg.DB_FAISS_PATH, embeddings)
+    vectordb = FAISS.load_local(cfg.DB_FAISS_PATH, embeddings, allow_dangerous_deserialization=True)
     llm = build_llm()
     qa_prompt = set_qa_prompt()
     dbqa = build_retrieval_qa(llm, qa_prompt, vectordb)

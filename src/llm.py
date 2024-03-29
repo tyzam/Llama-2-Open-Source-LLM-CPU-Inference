@@ -3,7 +3,7 @@
         Module: Open-source LLM Setup
 ===========================================
 '''
-from langchain.llms import CTransformers
+from langchain_community.llms import CTransformers
 from dotenv import find_dotenv, load_dotenv
 import box
 import yaml
